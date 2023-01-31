@@ -1,1 +1,1 @@
-prompt("Hey I ma linked!!!!!");
+console.log("assets/script.js is linked");
