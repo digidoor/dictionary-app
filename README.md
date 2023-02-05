@@ -11,4 +11,4 @@ A simple dictionary client that looks up words for the user from different websi
 ## Maybe, we'll see
 - suggestions for words that return no matches (possibly due to spelling errors)
 - wikitionary tie in showing additional info
-- Oxford English Dictionary tie in? would probably cost (((money))), however
+- Oxford English Dictionary tie in? Unlikely to have time.

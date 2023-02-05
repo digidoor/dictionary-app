@@ -1,6 +1,9 @@
+var word = "";
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
-var displayContainer = document.getElementById('dumping-groung');
+var displayContainer1 = document.getElementById('dumping-ground');
+var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
+console.log(dictionary);
 const options =
 {
 	method: 'GET',
@@ -13,7 +16,7 @@ const options =
 function formSubmitHandler(event)
 {
 	event.preventDefault();
-	var word = wordInputEl.value.trim();
+	word = wordInputEl.value.trim();
 	if(word){
 		getWordDefs(word);
 		wordInputEl.value = '';
@@ -50,8 +53,6 @@ function displayWordInfo( apiData, y )
 		return;
 	}
 	console.log(apiData);
-	console.log(apiData.word);
-	console.log(apiData.definitions);
 	var foundWord = document.createElement('h1');
 	foundWord.textContent = apiData.word;
 	for(i=0; i<apiData.definitions.length;i++)
@@ -60,37 +61,26 @@ function displayWordInfo( apiData, y )
 		def.textContent = apiData.definitions[i].definition;
 		foundWord.append(def);
 	}
-	displayContainer.append(foundWord);
+	displayContainer1.append(foundWord);
+	saveToDictionary(apiData);
+}
+
+function saveToDictionary( z )
+{
+	console.log(z); //just to see
+	var wordObj = {};
+	wordObj.name = z.word;
+	wordObj.definition = z.definitions[0].definition;
+	dictionary.push(wordObj);
+	dictionary.sort((a, b) => (a.name > b.name) ? 1 : -1);//we prefer our dictionaries in alphabetical order
+	console.log(dictionary);
+	localStorage.setItem("dictionary", JSON.stringify(dictionary));
 }
 userFormEl.addEventListener('submit', formSubmitHandler);
 
-/******************** suggested by the api people *********************
-fetch('https://wordsapiv1.p.rapidapi.com/words/hatchback/typeOf', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
-********************** but we're saving it for later ******************/
-
-
-
-// document.addEventListener("click", function(event) {
-//   // Checking if the button was clicked
-//  if (!event.target.matches("#search-button")) return;
-//  
+/***************** saving this => notation stuff for later *********************
 //  fetch('https://wordsapiv1.p.rapidapi.com/words/incredible/definitions', options)
 //  .then(response => response.json())
 //  .then(response => console.log(response))
 //  .catch(err => console.error(err));
-// });
-// 
-// //$
-// 
-// 
-// const options = {
-// 	method: 'GET',
-// 	headers: {
-// 	 'X-RapidAPI-Key': '3d5db3c0abmsh320832ed35d8ba3p126149jsne027b3581b02',
-// 		'X-RapidAPI-Host': 'wordsapiv1.p.rapidapi.com'
-// 	}
-// };
-// 
+*******************************************************************************/
