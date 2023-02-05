@@ -1,5 +1,6 @@
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
+var displayContainer = document.getElementById('dumping-groung');
 const options =
 {
 	method: 'GET',
@@ -49,11 +50,17 @@ function displayWordInfo( apiData, y )
 		return;
 	}
 	console.log(apiData);
-	for(i=0; i<apiData.length;i++)
+	console.log(apiData.word);
+	console.log(apiData.definitions);
+	var foundWord = document.createElement('h1');
+	foundWord.textContent = apiData.word;
+	for(i=0; i<apiData.definitions.length;i++)
 	{
 		var def = document.createElement('p');
 		def.textContent = apiData.definitions[i].definition;
+		foundWord.append(def);
 	}
+	displayContainer.append(foundWord);
 }
 userFormEl.addEventListener('submit', formSubmitHandler);
 
