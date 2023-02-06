@@ -2,7 +2,7 @@ var word = "";
 var statusEl = document.querySelector('#status');
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
-var displayContainer1 = document.getElementById('dumping-ground');
+var displayList = document.getElementById('def-list');
 var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
 console.log(dictionary);
 const options =
@@ -52,7 +52,7 @@ function displayWordInfo( apiData, y )
 	foundWord.textContent = apiData.word;
 	for(i=0; i<apiData.definitions.length;i++)
 	{
-		var def = document.createElement('p');
+		var def = document.createElement('li');
 		def.textContent = apiData.definitions[i].definition;
 		foundWord.append(def);
 	}
@@ -60,6 +60,10 @@ function displayWordInfo( apiData, y )
 	saveToDictionary(apiData);
 }
 
+function choicesHandler( )
+{
+
+}
 function saveToDictionary( z )
 {
 	console.log(z); //just to see
@@ -72,10 +76,4 @@ function saveToDictionary( z )
 	localStorage.setItem("dictionary", JSON.stringify(dictionary));
 }
 userFormEl.addEventListener('submit', formSubmitHandler);
-
-/***************** saving this => notation stuff for later *********************
-//  fetch('https://wordsapiv1.p.rapidapi.com/words/incredible/definitions', options)
-//  .then(response => response.json())
-//  .then(response => console.log(response))
-//  .catch(err => console.error(err));
-*******************************************************************************/
+displayList.addEventListener('click', choicesHandler);
