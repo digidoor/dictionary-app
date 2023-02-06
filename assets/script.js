@@ -5,6 +5,7 @@ var wordInputEl = document.querySelector('#word-input');
 var displayList = document.getElementById('def-list');
 var anchorDiv = document.querySelector('#anchor-div');
 var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
+var dictionaryButton = document.querySelector('#showDictionary');
 console.log(dictionary);
 const options =
 {
@@ -18,8 +19,8 @@ const options =
 function formSubmitHandler(event)
 {
 	event.preventDefault();
-	anchorDiv.innerHTML = '';
-	displayList.innerHTML = '';
+	anchorDiv.innerHTML = ''; //clear the results of the previous search
+	displayList.innerHTML = ''; //ditto
 
 	word = wordInputEl.value.trim();
 	if(word){
@@ -46,7 +47,6 @@ function getWordDefs( x )
 
 function displayWordInfo( apiData, y )
 {
-	console.log(apiData);
 	var foundWord = document.createElement('h1');
 	foundWord.textContent = apiData.word;
 	for(i=0; i<apiData.definitions.length;i++)
@@ -55,15 +55,38 @@ function displayWordInfo( apiData, y )
 		def.textContent = apiData.definitions[i].definition;
 		var radioButton = document.createElement("input");
 		radioButton.setAttribute("type", "checkbox");
+		radioButton.classList.add("box");
 		def.append(radioButton);
 		displayList.append(def);
 	}
 	anchorDiv.append(foundWord);
+	var saveButton = document.createElement("button");
+	initSave(saveButton);
+	displayList.append(saveButton);
 	saveToDictionary(apiData);
+	saveButton.addEventListener('click', choicesHandler);
 }
 
+function initSave( element )
+{
+	element.setAttribute('id', "saveButton");
+	element.textContent = "Save Definitions";
+
+}
 function choicesHandler( )
 {
+	event.preventDefault();//don't think this is necessary but whatever
+	var selected = [];
+	var numBoxes = document.querySelectorAll('.box').length;//either selector works
+	var boxes = document.getElementsByClassName('box');//querySelectorAll or gEBCN
+	for(var i=0;i<numBoxes;i++) //watch the lack of brackets; add here with caution
+		if(boxes[i].checked)
+		{
+			console.log(boxes[i].parentElement);
+			selected.push(boxes[i].parentElement.textContent);
+		}
+	console.log(selected);
+	saveToDictionary(selected);
 
 }
 function saveToDictionary( z )
@@ -77,9 +100,28 @@ function saveToDictionary( z )
 	console.log(dictionary);
 	localStorage.setItem("dictionary", JSON.stringify(dictionary));
 }
+function showDictionary()
+{
+	event.preventDefault();
+	anchorDiv.innerHTML = '';
+	displayList.innerHTML = '';
+	for(i=0;i<dictionary.length;i++)
+	{
+		var wordObj = dictionary[i];
+		var wordName = dictionary[i].name;
+		var wordDef = dictionary[i].definition;
+		nameEl = document.createElement("h4");
+		nameEl.textContent = wordName;
+		defEl = document.createElement("p");
+		defEl.textContent = wordDef;
+		nameEl.append(defEl);
+		displayList.append(nameEl);
+	}
+}
+dictionaryButton.addEventListener('click', showDictionary);
 userFormEl.addEventListener('submit', formSubmitHandler);
-displayList.addEventListener('click', choicesHandler);
+//displayList.addEventListener('click', choicesHandler);
 
 
 // Use this to clear the dictionary:
-//localStorage.removeItem("dictionary");
+localStorage.removeItem("dictionary");
