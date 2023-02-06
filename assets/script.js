@@ -54,8 +54,8 @@ function displayWordInfo( apiData, word )
 	for(i=0; i<defListObj.definitions.length;i++)
 	{
 		var defEl = document.createElement('p');
-		defEl.textContent = defListObj.definitions[i].partOfSpeech + '. ';
-		defEl.textContent += ": " + defListObj.definitions[i].definition;
+		defEl.innerHTML = "<em>" + defListObj.definitions[i].partOfSpeech + '. ' + "</em>";
+		defEl.innerHTML += ": " + defListObj.definitions[i].definition;
 		var checkBox = document.createElement("input");
 		checkBox.setAttribute("type", "checkbox");
 		checkBox.classList.add("box");
@@ -129,8 +129,8 @@ function showDictionary()
 				var defEl = document.createElement('p');
 				var propName = `${prop}`;
 				var otherProp = propName.replace("definition", "partOfSpeech");
-				defEl.textContent = wordObj[otherProp] + ". ";
-				defEl.textContent += ": " + wordObj[propName];
+				defEl.innerHTML = "<em>" + wordObj[otherProp] + ". " + "</em>";
+				defEl.innerHTML += ": " + wordObj[propName];
 				nameEl.append(defEl);
 			}
 		displayList.append(nameEl);
