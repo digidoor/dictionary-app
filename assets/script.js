@@ -54,7 +54,7 @@ function displayWordInfo( apiData, word )
 	for(i=0; i<defListObj.definitions.length;i++)
 	{
 		var defEl = document.createElement('p');
-		defEl.innerHTML = "<em>" + defListObj.definitions[i].partOfSpeech + '. ' + "</em>";
+		defEl.innerHTML = "<em>" + abbr(defListObj.definitions[i].partOfSpeech) + ' ' + "</em>";
 		defEl.innerHTML += ": " + defListObj.definitions[i].definition;
 		var checkBox = document.createElement("input");
 		checkBox.setAttribute("type", "checkbox");
@@ -62,16 +62,16 @@ function displayWordInfo( apiData, word )
 		defEl.append(checkBox);
 		foundWord.append(defEl);
 	}
-	var saveButton = document.createElement("button");
-	initSave(saveButton);
-	displayList.append(saveButton);
-	saveButton.addEventListener('click', choicesHandler);
+	initSave();
 }
 
-function initSave( element )
+function initSave( )
 {
-	element.setAttribute('id', "saveButton");
-	element.textContent = "Save Definitions";
+	var saveButton = document.createElement("button");
+	saveButton.setAttribute('id', "saveButton");
+	saveButton.textContent = "Save Definitions";
+	displayList.append(saveButton);
+	saveButton.addEventListener('click', choicesHandler);
 }
 
 function choicesHandler( )
@@ -129,7 +129,7 @@ function showDictionary()
 				var defEl = document.createElement('p');
 				var propName = `${prop}`;
 				var otherProp = propName.replace("definition", "partOfSpeech");
-				defEl.innerHTML = "<em>" + wordObj[otherProp] + ". " + "</em>";
+				defEl.innerHTML = "<em>" + abbr(wordObj[otherProp]) + " " + "</em>";
 				defEl.innerHTML += ": " + wordObj[propName];
 				nameEl.append(defEl);
 			}
@@ -142,6 +142,31 @@ function clearPrevious()
 	anchorDiv.innerHTML = '';
 	displayList.innerHTML = '';
 	statusEl.textContent = '';
+}
+
+function abbr(pos)
+{
+	switch(pos)
+	{
+		case "noun":
+			return "n.";
+		case "verb":
+			return "v.";
+		case "adjective":
+			return "adj.";
+		case "adverb":
+			return "adv.";
+		case "pronoun":
+			return "pron.";
+		case "preposition":
+			return "prep.";
+		case "conjunction":
+			return "conj.";
+		case "definite article":
+			return "def.art.";
+		default:
+			return pos;
+	}
 }
 
 dictionaryButton.addEventListener('click', showDictionary);
