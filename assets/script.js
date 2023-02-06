@@ -1,4 +1,5 @@
 var word = "";
+var statusEl = document.querySelector('#status');
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
 var displayContainer1 = document.getElementById('dumping-ground');
@@ -31,19 +32,13 @@ function getWordDefs( x )
 		.then(function(response)
 		{
 			if(response.ok)
-			{
-				response.json().then(function(data)
-				{
-					displayWordInfo(data, x);
-				});
-			} else {
-				alert('Error: ' + response.statusText);
-			}
-		})
-		.catch(function(error) {
-			alert('Unable to connect to wordsAPI');
-		});
+				response.json().then(data => displayWordInfo(data,x));
+			else if (response.status == 404)
+				statusEl.textContent = 'Sorry, word not found. Try another.';
+		})//don't add code above without noting the lack of brackets on this if
+		.catch(error => console.error(err));
 }
+
 
 function displayWordInfo( apiData, y )
 {
