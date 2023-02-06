@@ -1,5 +1,6 @@
 var word = "";
 var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
+var defListObj = {};
 var statusEl = document.querySelector('#status');
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
@@ -34,9 +35,9 @@ function getWordDefs( word )
 	fetch(apiURL, options)
 		.then( response =>
 		{
-			if(response.ok)
+			if(response.ok) // doing "definitions = data" below DOES NOT WORK
 				response.json().then(data => displayWordInfo(data, word));
-			else if (response.status == 404)
+			else if (response.status == 404)//it has to be passed on to the next function to be usable for whatever reason. some browser sorcery.
 				statusEl.textContent = 'Sorry, word not found. Try another.';
 		})//don't add code above without noting the lack of brackets on this if
 		.catch(error => console.error(err));
@@ -47,17 +48,19 @@ function displayWordInfo( apiData, word )
 {
 	console.log(apiData);// for testing and feature creep needs
 	var foundWord = document.createElement('h4');
-	foundWord.textContent = word;
+	defListObj = apiData; //more descriptive. can't use it prior to this pass
+	foundWord.textContent = defListObj.word;
 	displayList.append(foundWord);
-	for(i=0; i<apiData.definitions.length;i++)
+	for(i=0; i<defListObj.definitions.length;i++)
 	{
-		var def = document.createElement('p');
-		def.textContent = ": " + apiData.definitions[i].definition;
+		var defEl = document.createElement('p');
+		defEl.textContent = defListObj.definitions[i].partOfSpeech + '. ';
+		defEl.textContent += ": " + defListObj.definitions[i].definition;
 		var checkBox = document.createElement("input");
 		checkBox.setAttribute("type", "checkbox");
 		checkBox.classList.add("box");
-		def.append(checkBox);
-		foundWord.append(def);
+		defEl.append(checkBox);
+		foundWord.append(defEl);
 	}
 	var saveButton = document.createElement("button");
 	initSave(saveButton);
@@ -69,38 +72,39 @@ function initSave( element )
 {
 	element.setAttribute('id', "saveButton");
 	element.textContent = "Save Definitions";
-
 }
 
 function choicesHandler( )
 {
 	event.preventDefault();//don't think this is necessary but whatever
-	var selected = [];
+	var selectedIndexes = [];
 	var numBoxes = document.querySelectorAll('.box').length;//either selector works
 	var boxes = document.getElementsByClassName('box');//querySelectorAll or gEBCN
 	for(var i=0;i<numBoxes;i++) //watch the lack of brackets; add here with caution
 		if(boxes[i].checked) //another bracketless block; caution as always
-			selected.push(boxes[i].parentElement.textContent);
-	//console.log(selected);
-	saveToDictionary(selected);
-
+			selectedIndexes.push(i);
+	saveToDictionary(selectedIndexes);
 }
 
-function saveToDictionary( selected )
+function saveToDictionary( selectedIndexes )
 {
 	//console.log(selected); //just to see
 	var wordObj = {};
-	wordObj.name = word; //our good ol' global variable "word"
+	var i = 0;
+	wordObj.name = defListObj.word;
 	console.log(wordObj.name);
-	for(i=0;i<selected.length;i++)
-		wordObj[`definition${i}`] = selected[i];
-	//for(i=0;i<selected.length;i++)
-	//	wordObj[`partOfSpeech${i}`] = selected[i];
-	var i = dictionary.findIndex( element => element.name == wordObj.name );
-	if( i > -1 )
-		dictionary[i] = wordObj;
+	while(selectedIndexes.length) //zero is falsy
+	{
+		wordObj[`definition${i}`] = defListObj.definitions[selectedIndexes[0]].definition;
+		wordObj[`partOfSpeech${i}`] = defListObj.definitions[selectedIndexes[0]].partOfSpeech;
+		i++;
+		selectedIndexes.shift();
+	}
+	var i = dictionary.findIndex( element => element.name == wordObj.name );//see below
+	if( i > -1 ) //check if the word is already iin the dictionary
+		dictionary[i] = wordObj; //don't push if it's already in the dictionary
 	else
-		dictionary.push(wordObj);
+		dictionary.push(wordObj); //overwrite the old one instead
 	dictionary.sort((a, b) => (a.name > b.name) ? 1 : -1);//we prefer our dictionaries in alphabetical order
 	console.log(dictionary);
 	localStorage.setItem("dictionary", JSON.stringify(dictionary));
@@ -123,7 +127,10 @@ function showDictionary()
 			if(prop.match(re))
 			{
 				var defEl = document.createElement('p');
-				defEl.textContent = ": " + wordObj[`${prop}`];
+				var propName = `${prop}`;
+				var otherProp = propName.replace("definition", "partOfSpeech");
+				defEl.textContent = wordObj[otherProp] + ". ";
+				defEl.textContent += ": " + wordObj[propName];
 				nameEl.append(defEl);
 			}
 		displayList.append(nameEl);
