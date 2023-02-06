@@ -1,10 +1,10 @@
 var word = "";
+var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
 var statusEl = document.querySelector('#status');
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
 var displayList = document.getElementById('def-list');
 var anchorDiv = document.querySelector('#anchor-div');
-var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
 var dictionaryButton = document.querySelector('#showDictionary');
 console.log(dictionary);
 const options =
@@ -19,8 +19,7 @@ const options =
 function formSubmitHandler(event)
 {
 	event.preventDefault();
-	anchorDiv.innerHTML = ''; //clear the results of the previous search
-	displayList.innerHTML = ''; //ditto
+	clearPrevious();
 
 	word = wordInputEl.value.trim();
 	if(word){
@@ -32,9 +31,8 @@ function formSubmitHandler(event)
 function getWordDefs( word )
 {
 	var apiURL = 'https://wordsapiv1.p.rapidapi.com/words/' + word + '/definitions';
-
 	fetch(apiURL, options)
-		.then(function(response)
+		.then( response =>
 		{
 			if(response.ok)
 				response.json().then(data => displayWordInfo(data, word));
@@ -47,23 +45,23 @@ function getWordDefs( word )
 
 function displayWordInfo( apiData, word )
 {
-	var foundWord = document.createElement('h1');
+	console.log(apiData);// for testing and feature creep needs
+	var foundWord = document.createElement('h4');
 	foundWord.textContent = word;
+	displayList.append(foundWord);
 	for(i=0; i<apiData.definitions.length;i++)
 	{
-		var def = document.createElement('li');
-		def.textContent = apiData.definitions[i].definition;
+		var def = document.createElement('p');
+		def.textContent = ": " + apiData.definitions[i].definition;
 		var checkBox = document.createElement("input");
 		checkBox.setAttribute("type", "checkbox");
 		checkBox.classList.add("box");
 		def.append(checkBox);
-		displayList.append(def);
+		foundWord.append(def);
 	}
-	anchorDiv.append(foundWord);
 	var saveButton = document.createElement("button");
 	initSave(saveButton);
 	displayList.append(saveButton);
-	//saveToDictionary(apiData);
 	saveButton.addEventListener('click', choicesHandler);
 }
 
@@ -83,19 +81,21 @@ function choicesHandler( )
 	for(var i=0;i<numBoxes;i++) //watch the lack of brackets; add here with caution
 		if(boxes[i].checked) //another bracketless block; caution as always
 			selected.push(boxes[i].parentElement.textContent);
-	console.log(selected);
+	//console.log(selected);
 	saveToDictionary(selected);
 
 }
 
 function saveToDictionary( selected )
 {
-	console.log(selected); //just to see
+	//console.log(selected); //just to see
 	var wordObj = {};
 	wordObj.name = word; //our good ol' global variable "word"
 	console.log(wordObj.name);
 	for(i=0;i<selected.length;i++)
 		wordObj[`definition${i}`] = selected[i];
+	//for(i=0;i<selected.length;i++)
+	//	wordObj[`partOfSpeech${i}`] = selected[i];
 	var i = dictionary.findIndex( element => element.name == wordObj.name );
 	if( i > -1 )
 		dictionary[i] = wordObj;
@@ -111,8 +111,7 @@ function showDictionary()
 	// load the dictionary back in, yeah? might have changed
 	event.preventDefault();
 	dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
-	anchorDiv.innerHTML = '';
-	displayList.innerHTML = '';
+	clearPrevious();
 	var wordObj = {};
 	for(i=0;i<dictionary.length;i++)
 	{
@@ -124,14 +123,23 @@ function showDictionary()
 			if(prop.match(re))
 			{
 				var defEl = document.createElement('p');
-				defEl.textContent = wordObj[`${prop}`];
+				defEl.textContent = ": " + wordObj[`${prop}`];
 				nameEl.append(defEl);
 			}
 		displayList.append(nameEl);
 	}
 }
+
+function clearPrevious()
+{
+	anchorDiv.innerHTML = '';
+	displayList.innerHTML = '';
+	statusEl.textContent = '';
+}
+
 dictionaryButton.addEventListener('click', showDictionary);
 userFormEl.addEventListener('submit', formSubmitHandler);
 
 // Use this to clear the dictionary:
-localStorage.removeItem("dictionary");
+//localStorage.removeItem("dictionary");
+// (or you could just delete it manually through developer tools...
