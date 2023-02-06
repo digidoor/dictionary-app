@@ -3,6 +3,7 @@ var statusEl = document.querySelector('#status');
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
 var displayList = document.getElementById('def-list');
+var anchorDiv = document.querySelector('#anchor-div');
 var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
 console.log(dictionary);
 const options =
@@ -17,6 +18,9 @@ const options =
 function formSubmitHandler(event)
 {
 	event.preventDefault();
+	anchorDiv.innerHTML = '';
+	displayList.innerHTML = '';
+
 	word = wordInputEl.value.trim();
 	if(word){
 		getWordDefs(word);
@@ -42,11 +46,6 @@ function getWordDefs( x )
 
 function displayWordInfo( apiData, y )
 {
-	if(apiData.length === 0)
-	{
-		wordDataEl.textContent = 'Nothing found for that word.';
-		return;
-	}
 	console.log(apiData);
 	var foundWord = document.createElement('h1');
 	foundWord.textContent = apiData.word;
@@ -54,9 +53,12 @@ function displayWordInfo( apiData, y )
 	{
 		var def = document.createElement('li');
 		def.textContent = apiData.definitions[i].definition;
-		foundWord.append(def);
+		var radioButton = document.createElement("input");
+		radioButton.setAttribute("type", "checkbox");
+		def.append(radioButton);
+		displayList.append(def);
 	}
-	displayContainer1.append(foundWord);
+	anchorDiv.append(foundWord);
 	saveToDictionary(apiData);
 }
 
@@ -77,3 +79,7 @@ function saveToDictionary( z )
 }
 userFormEl.addEventListener('submit', formSubmitHandler);
 displayList.addEventListener('click', choicesHandler);
+
+
+// Use this to clear the dictionary:
+//localStorage.removeItem("dictionary");
