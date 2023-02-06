@@ -1,92 +1,92 @@
 body {
-  background-color: rgb(240, 252, 255);
-  margin: 0%;
+	background-color: rgb(240, 252, 255);
+	margin: 0%;
 }
 
 nav {
-  display: flex;
-  background-image: url("https://media1.giphy.com/media/OkVVUlG40FnuE/giphy.gif?cid=ecf05e47y34dfcheqz46hk1iqehf5lwq4zoefpdvuymbcbpe&rid=giphy.gif&ct=g");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: 20px;
-  justify-content: end;
-  text-decoration: solid;
+	display: flex;
+	background-image: url("https://media1.giphy.com/media/OkVVUlG40FnuE/giphy.gif?cid=ecf05e47y34dfcheqz46hk1iqehf5lwq4zoefpdvuymbcbpe&rid=giphy.gif&ct=g");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 20px;
+	justify-content: end;
+	text-decoration: solid;
 }
 
 span {
-  margin: 10px;
-  font-size: 1.3rem;
-  color: white;
+	margin: 10px;
+	font-size: 1.3rem;
+	color: white;
 }
 
 a {
-  margin: 10px;
-  font-size: 1.3rem;
-  color: white;
+	margin: 10px;
+	font-size: 1.3rem;
+	color: white;
 }
 
 .container {
-  text-align: center;
-  margin-top: 100px;
+	text-align: center;
+	margin-top: 10px;
 }
 
 input {
-  border-radius: 10px;
-  width: 20%;
-  height: 30px;
+	border-radius: 10px;
+	width: 20%;
+	height: 30px;
 }
 
 .sidesection {
-  background-color: rgb(153, 190, 190);
-  width: 180px;
-  height: 600px;
-  margin: 0px 117px 0px 35px;
-  text-align: center;
-  border-radius: 20px;
-  box-shadow: 3px 3px black, -1em 0 0.4em rgb(187, 217, 223);
-  color: white;
+	background-color: rgb(153, 190, 190);
+	width: 180px;
+	height: 600px;
+	margin: 0px 117px 0px 35px;
+	text-align: center;
+	border-radius: 20px;
+	box-shadow: 3px 3px black, -1em 0 0.4em rgb(187, 217, 223);
+	color: white;
 }
 
 h1 {
-  margin-bottom: 40px;
-  text-decoration: underline;
+	margin-bottom: 40px;
+	text-decoration: underline;
 }
 
 h2 {
-  padding-top: 20px;
-  text-decoration: underline;
-  color: black;
+	padding-top: 20px;
+	text-decoration: underline;
+	color: black;
 }
 h3 {
-  font-size: 1rem;
+	font-size: 1rem;
 }
 
 p {
-  margin-top: 50px;
+	margin-top: 50px;
 }
 
 button:hover {
-  background-color: red;
-  cursor: pointer;
+	background-color: red;
+	cursor: pointer;
 }
 
 button {
-  width: 100px;
-  border-radius: 10px;
-  background-color: rgb(42, 111, 105);
-  color: white;
+	width: 100px;
+	border-radius: 10px;
+	background-color: rgb(42, 111, 105);
+	color: white;
 }
 
 .save {
-  margin-top: 100px;
+	margin-top: 100px;
 }
 
 footer {
-  background-color: rgb(161, 202, 203);
-  color: white;
-  text-align: center;
-  justify-content: end;
-  padding: 10px;
-  margin-top: 30px;
+	background-color: rgb(161, 202, 203);
+	color: white;
+	text-align: center;
+	justify-content: end;
+	padding: 10px;
+	margin-top: 30px;
 }
