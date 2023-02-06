@@ -1,8 +1,12 @@
 var word = "";
+var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
+var defListObj = {};
+var statusEl = document.querySelector('#status');
 var userFormEl = document.querySelector('#user-form');
 var wordInputEl = document.querySelector('#word-input');
-var displayContainer1 = document.getElementById('dumping-ground');
-var dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
+var displayList = document.getElementById('def-list');
+var anchorDiv = document.querySelector('#anchor-div');
+var dictionaryButton = document.querySelector('#showDictionary');
 console.log(dictionary);
 const options =
 {
@@ -16,6 +20,8 @@ const options =
 function formSubmitHandler(event)
 {
 	event.preventDefault();
+	clearPrevious();
+
 	word = wordInputEl.value.trim();
 	if(word){
 		getWordDefs(word);
@@ -23,64 +29,149 @@ function formSubmitHandler(event)
 	}
 }
 
-function getWordDefs( x )
+function getWordDefs( word )
 {
-	var apiURL = 'https://wordsapiv1.p.rapidapi.com/words/' + x + '/definitions';
-
+	var apiURL = 'https://wordsapiv1.p.rapidapi.com/words/' + word + '/definitions';
 	fetch(apiURL, options)
-		.then(function(response)
+		.then( response =>
 		{
-			if(response.ok)
-			{
-				response.json().then(function(data)
-				{
-					displayWordInfo(data, x);
-				});
-			} else {
-				alert('Error: ' + response.statusText);
-			}
-		})
-		.catch(function(error) {
-			alert('Unable to connect to wordsAPI');
-		});
+			if(response.ok) // doing "definitions = data" below DOES NOT WORK
+				response.json().then(data => displayWordInfo(data, word));
+			else if (response.status == 404)//it has to be passed on to the next function to be usable for whatever reason. some browser sorcery.
+				statusEl.textContent = 'Sorry, word not found. Try another.';
+		})//don't add code above without noting the lack of brackets on this if
+		.catch(error => console.error(err));
 }
 
-function displayWordInfo( apiData, y )
+
+function displayWordInfo( apiData, word )
 {
-	if(apiData.length === 0)
+	console.log(apiData);// for testing and feature creep needs
+	var foundWord = document.createElement('h4');
+	defListObj = apiData; //more descriptive. can't use it prior to this pass
+	foundWord.textContent = defListObj.word;
+	displayList.append(foundWord);
+	for(i=0; i<defListObj.definitions.length;i++)
 	{
-		wordDataEl.textContent = 'Nothing found for that word.';
-		return;
+		var defEl = document.createElement('p');
+		defEl.innerHTML = "<em>" + abbr(defListObj.definitions[i].partOfSpeech) + ' ' + "</em>";
+		defEl.innerHTML += ": " + defListObj.definitions[i].definition;
+		var checkBox = document.createElement("input");
+		checkBox.setAttribute("type", "checkbox");
+		checkBox.classList.add("box");
+		defEl.append(checkBox);
+		foundWord.append(defEl);
 	}
-	console.log(apiData);
-	var foundWord = document.createElement('h1');
-	foundWord.textContent = apiData.word;
-	for(i=0; i<apiData.definitions.length;i++)
-	{
-		var def = document.createElement('p');
-		def.textContent = apiData.definitions[i].definition;
-		foundWord.append(def);
-	}
-	displayContainer1.append(foundWord);
-	saveToDictionary(apiData);
+	initSave();
 }
 
-function saveToDictionary( z )
+function initSave( )
 {
-	console.log(z); //just to see
+	var saveButton = document.createElement("button");
+	saveButton.setAttribute('id', "saveButton");
+	saveButton.textContent = "Save Definitions";
+	displayList.append(saveButton);
+	saveButton.addEventListener('click', choicesHandler);
+}
+
+function choicesHandler( )
+{
+	event.preventDefault();//don't think this is necessary but whatever
+	var selectedIndexes = [];
+	var numBoxes = document.querySelectorAll('.box').length;//either selector works
+	var boxes = document.getElementsByClassName('box');//querySelectorAll or gEBCN
+	for(var i=0;i<numBoxes;i++) //watch the lack of brackets; add here with caution
+		if(boxes[i].checked) //another bracketless block; caution as always
+			selectedIndexes.push(i);
+	saveToDictionary(selectedIndexes);
+}
+
+function saveToDictionary( selectedIndexes )
+{
+	//console.log(selected); //just to see
 	var wordObj = {};
-	wordObj.name = z.word;
-	wordObj.definition = z.definitions[0].definition;
-	dictionary.push(wordObj);
+	var i = 0;
+	wordObj.name = defListObj.word;
+	console.log(wordObj.name);
+	while(selectedIndexes.length) //zero is falsy
+	{
+		wordObj[`definition${i}`] = defListObj.definitions[selectedIndexes[0]].definition;
+		wordObj[`partOfSpeech${i}`] = defListObj.definitions[selectedIndexes[0]].partOfSpeech;
+		i++;
+		selectedIndexes.shift();
+	}
+	var i = dictionary.findIndex( element => element.name == wordObj.name );//see below
+	if( i > -1 ) //check if the word is already iin the dictionary
+		dictionary[i] = wordObj; //don't push if it's already in the dictionary
+	else
+		dictionary.push(wordObj); //overwrite the old one instead
 	dictionary.sort((a, b) => (a.name > b.name) ? 1 : -1);//we prefer our dictionaries in alphabetical order
 	console.log(dictionary);
 	localStorage.setItem("dictionary", JSON.stringify(dictionary));
 }
+
+function showDictionary()
+{
+	// load the dictionary back in, yeah? might have changed
+	event.preventDefault();
+	dictionary = JSON.parse(localStorage.getItem("dictionary")) || [];
+	clearPrevious();
+	var wordObj = {};
+	for(i=0;i<dictionary.length;i++)
+	{
+		wordObj = dictionary[i];
+		nameEl = document.createElement("h4");
+		nameEl.textContent = wordObj.name;
+		var re = /definition[0-9]+/;
+		for(prop in wordObj)
+			if(prop.match(re))
+			{
+				var defEl = document.createElement('p');
+				var propName = `${prop}`;
+				var otherProp = propName.replace("definition", "partOfSpeech");
+				defEl.innerHTML = "<em>" + abbr(wordObj[otherProp]) + " " + "</em>";
+				defEl.innerHTML += ": " + wordObj[propName];
+				nameEl.append(defEl);
+			}
+		displayList.append(nameEl);
+	}
+}
+
+function clearPrevious()
+{
+	anchorDiv.innerHTML = '';
+	displayList.innerHTML = '';
+	statusEl.textContent = '';
+}
+
+function abbr(pos)
+{
+	switch(pos)
+	{
+		case "noun":
+			return "n.";
+		case "verb":
+			return "v.";
+		case "adjective":
+			return "adj.";
+		case "adverb":
+			return "adv.";
+		case "pronoun":
+			return "pron.";
+		case "preposition":
+			return "prep.";
+		case "conjunction":
+			return "conj.";
+		case "definite article":
+			return "def.art.";
+		default:
+			return pos;
+	}
+}
+
+dictionaryButton.addEventListener('click', showDictionary);
 userFormEl.addEventListener('submit', formSubmitHandler);
 
-/***************** saving this => notation stuff for later *********************
-//  fetch('https://wordsapiv1.p.rapidapi.com/words/incredible/definitions', options)
-//  .then(response => response.json())
-//  .then(response => console.log(response))
-//  .catch(err => console.error(err));
-*******************************************************************************/
+// Use this to clear the dictionary:
+//localStorage.removeItem("dictionary");
+// (or you could just delete it manually through developer tools...
