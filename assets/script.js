@@ -92,11 +92,15 @@ function saveToDictionary( selected )
 {
 	console.log(selected); //just to see
 	var wordObj = {};
-	wordObj.name = word;
-	console.log(word);
+	wordObj.name = word; //our good ol' global variable "word"
+	console.log(wordObj.name);
 	for(i=0;i<selected.length;i++)
 		wordObj[`definition${i}`] = selected[i];
-	dictionary.push(wordObj);
+	var i = dictionary.findIndex( element => element.name == wordObj.name );
+	if( i > -1 )
+		dictionary[i] = wordObj;
+	else
+		dictionary.push(wordObj);
 	dictionary.sort((a, b) => (a.name > b.name) ? 1 : -1);//we prefer our dictionaries in alphabetical order
 	console.log(dictionary);
 	localStorage.setItem("dictionary", JSON.stringify(dictionary));
@@ -130,4 +134,4 @@ dictionaryButton.addEventListener('click', showDictionary);
 userFormEl.addEventListener('submit', formSubmitHandler);
 
 // Use this to clear the dictionary:
-//localStorage.removeItem("dictionary");
+localStorage.removeItem("dictionary");
