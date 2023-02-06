@@ -14,53 +14,42 @@
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <nav>
-    <button id="game">Game</button>
+    <div id="h1txt">
+        <h1>Dictionary Web App</h1>
+    </div>
+    
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button class="btn btn-primary me-md-2" id= "btn1" type="button">Game</button>
+        <button class="btn btn-primary" id="btn2" type="button">Contact</button>
+    </div>   
   </nav>
 
   <body>
-    <div class="container">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-secondary" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-success" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-danger" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-warning" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-info" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-      <div class="spinner-border text-dark" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-
     <div class="container1" id="main-div">
-      <h1>Dictionary Web App</h1>
-      <form id="user-form">
-        <input type="text" placeholder="Search a word" id="word-input" />
-        <button id="searchButton">Search</button>
-        <button id="showDictionary">Show Dictionary</button>
-        <br><span id="status" class="stats"></span>
-        <div id="dumping-ground">
-      </form>
+        <form id="user-form">
+         
+          <input type="text" placeholder="Search a word" id="word-input" />
+          <button class="btn btn-primary me-md-2" type="search" id="searchButton">Search</button>
+          <button class="btn btn-primary" id="showDictionary" type="button">Show Dictionary</button>
+          
+          <br><span id="status" class="stats"></span>
+          
+          <div id="dumping-ground">
+        </form>
+    </div>
+      
+    <div id="anchor-div"></div>
+      <ul id="def-list"></ul>
     </div>
     <div id="anchor-div"></div>
     <ul id="def-list"></ul>
 
     <footer>
-      <h3>Arranged by Group 4th &COPY;2023</h3>
+        <h3>Arranged by Group 4th &COPY;2023</h3>
     </footer>
+  
     <script src="./assets/script.js"></script>
-  </body>
-</html>
+  
+</body>
+ 
+ </html>
