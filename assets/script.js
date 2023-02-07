@@ -7,7 +7,7 @@ var wordInputEl = document.querySelector('#word-input');
 var displayList = document.getElementById('def-list');
 var anchorDiv = document.querySelector('#anchor-div');
 var dictionaryButton = document.querySelector('#showDictionary');
-const btn = document.querySelector('#btn1')
+const btn = document.querySelector('#gameBtn')
 console.log(dictionary);
 
 btn.onclick = function () {
