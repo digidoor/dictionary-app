@@ -1,11 +1,17 @@
+
 body {
   background-color: rgb(202, 210, 197);
   margin: 0%;
 }
 
 nav {
+<<<<<<< HEAD
+  height:70px;
+  background-color: rgb(176, 193, 180);
+=======
   height: 70px;
   background-color: rgb(164, 184, 168);
+>>>>>>> 347bc7baed8befb35af40939c092a5188c3dcf28
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -62,9 +68,16 @@ a {
 
 .container1 {
   background-color: beige;
+<<<<<<< HEAD
+  height:500px;
+  flex:3;
+  padding:20px 35px;
+  border-radius:20px;
+=======
   flex: 3;
   padding: 20px 35px;
   border-radius: 20px;
+>>>>>>> 347bc7baed8befb35af40939c092a5188c3dcf28
   margin: 40px;
 }
 
@@ -168,7 +181,13 @@ footer {
   color: #003344;
 }
 
-.box {
-  text-align: right;
-  justify-content: end;
+.box{
+  font-family: system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+
 }
