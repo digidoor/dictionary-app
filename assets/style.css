@@ -23,7 +23,7 @@ nav {
 }
 
 #btn1,
-#btn2 {
+#btn2, #btn3, #saveButton {
   background-color: #85b9af;
   color: #003344;
   border-color: white;
@@ -32,6 +32,23 @@ nav {
   margin-right: 30px;
   margin-bottom: 10px;
   height: 40px;
+}
+
+#status {
+  text-align: center;
+  align-items: center;
+  color: #00AA99;
+  width: 100%;
+}
+
+#saveButton {
+  /*display: flex;*/
+  justify-content: center;
+  align-items: center;
+  align: center;
+  width: 100%;
+  text-align: center;
+  /* color: #FF0000; */ /*just for testing*/
 }
 
 span {
@@ -145,7 +162,9 @@ footer {
   text-align: center;
   justify-content: end;
   padding: 18px;
-  margin-top: 425px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background-color: rgb(164, 184, 168);
 }
 

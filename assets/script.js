@@ -53,7 +53,13 @@ function displayWordInfo( apiData, word )
 	displayList.append(foundWord);
 	for(i=0; i<defListObj.definitions.length;i++)
 	{
+		let e = i % 2;
+
+		
 		var defEl = document.createElement('p');
+		defEl.setAttribute("style", " background: #CCCCCC");
+		if(e)
+			defEl.setAttribute("style", " background: #999999;");
 		defEl.innerHTML = "<em>" + abbr(defListObj.definitions[i].partOfSpeech) + ' ' + "</em>";
 		defEl.innerHTML += ": " + defListObj.definitions[i].definition;
 		var checkBox = document.createElement("input");
@@ -70,6 +76,7 @@ function initSave( )
 	var saveButton = document.createElement("button");
 	saveButton.setAttribute('id', "saveButton");
 	saveButton.textContent = "Save Definitions";
+	//checkBox.classList.add("button");
 	displayList.append(saveButton);
 	saveButton.addEventListener('click', choicesHandler);
 }
