@@ -41,16 +41,6 @@ nav {
   width: 100%;
 }
 
-#saveButton {
-  /*display: flex;*/
-  justify-content: center;
-  align-items: center;
-  align: center;
-  width: 100%;
-  text-align: center;
-  /* color: #FF0000; */ /*just for testing*/
-}
-
 span {
   margin: 10px;
   font-size: 1.3rem;
