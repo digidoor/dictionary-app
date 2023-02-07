@@ -71,6 +71,7 @@ input {
 
 #searchButton,
 #showDictionary {
+  text-align: center;
   width: 100px;
   border-radius: 10px;
   background-color: rgb(42, 111, 105);
@@ -82,17 +83,6 @@ input {
 
 #showDictionary {
   width: 150px;
-}
-
-.sidesection {
-  background-color: rgb(153, 190, 190);
-  width: 180px;
-  height: 600px;
-  margin: 0px 117px 0px 35px;
-  text-align: center;
-  border-radius: 20px;
-  box-shadow: 3px 3px black, -1em 0 0.4em rgb(187, 217, 223);
-  color: white;
 }
 
 button:hover {
@@ -142,8 +132,11 @@ ul {
   font-size: 1rem;
 }
 
-.save {
-  margin-top: 100px;
+#saveButton {
+  background-color: #85b9af;
+  position: relative;
+  left: 386px;
+  border-radius: 5px;
 }
 
 footer {
