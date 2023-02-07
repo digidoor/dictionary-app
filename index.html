@@ -13,18 +13,37 @@
     />
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
-  <nav>
-    <div id="h1txt">
-        <h1>Dictionary Web App</h1>
-    </div>
-    
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button class="btn btn-primary me-md-2" id= "btn1" type="button">Game</button>
-        <button class="btn btn-primary" id="btn2" type="button">Contact</button>
-    </div>   
-  </nav>
-
   <body>
+
+    <nav class="navbar navbar-expand-lg custom-navbar navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Dictionary Web App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbar"
+          aria-controls="navbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar">
+          <div class="navbar-nav ms-auto">
+            <a class="nav-item nav-link" href="#">Game</a>
+            <a class="nav-item nav-link" href="#">Contact</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+
+
+
+
+
     <div class="container1" id="main-div">
         <form id="user-form">
          

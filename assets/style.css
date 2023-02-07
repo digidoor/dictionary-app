@@ -5,34 +5,57 @@ body {
 }
 
 nav {
+<<<<<<< HEAD
   height:70px;
   background-color: rgb(176, 193, 180);
+=======
+  height: 70px;
+  background-color: rgb(164, 184, 168);
+>>>>>>> 347bc7baed8befb35af40939c092a5188c3dcf28
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   padding-bottom: 20px;
   justify-content: end;
-  text-decoration: solid; 
+  text-decoration: solid;
 }
 
-#h1txt{
-  color:#003344;
+#h1txt {
+  color: #003344;
   margin-left: 30px;
-  padding-top:10px;
-  text-shadow: -0.7px -0.7px 0 white, 0.7px -0.7px 0 white, -0.7px 0.7px 0 white, 0.7px 0.7px 0 white;
+  padding-top: 10px;
+  text-shadow: -0.7px -0.7px 0 white, 0.7px -0.7px 0 white, -0.7px 0.7px 0 white,
+    0.7px 0.7px 0 white;
 }
 
 #btn1,
-#btn2 {
+#btn2, #btn3, #saveButton {
   background-color: #85b9af;
-  color:#003344;
+  color: #003344;
   border-color: white;
-  margin:10px;
+  margin: 10px;
   margin-top: -45px;
   margin-right: 30px;
-  margin-bottom:10px;
-  height:40px;
-};
+  margin-bottom: 10px;
+  height: 40px;
+}
+
+#status {
+  text-align: center;
+  align-items: center;
+  color: #00AA99;
+  width: 100%;
+}
+
+#saveButton {
+  /*display: flex;*/
+  justify-content: center;
+  align-items: center;
+  align: center;
+  width: 100%;
+  text-align: center;
+  /* color: #FF0000; */ /*just for testing*/
+}
 
 span {
   margin: 10px;
@@ -55,53 +78,47 @@ a {
 
 .container1 {
   background-color: beige;
+<<<<<<< HEAD
   height:500px;
   flex:3;
   padding:20px 35px;
   border-radius:20px;
+=======
+  flex: 3;
+  padding: 20px 35px;
+  border-radius: 20px;
+>>>>>>> 347bc7baed8befb35af40939c092a5188c3dcf28
   margin: 40px;
 }
 
-
 input {
-  margin-left:300px;
+  margin-left: 300px;
   border-radius: 10px;
   width: 20%;
   height: 37px;
-  border-color:rgb(132, 164, 148);
+  border-color: rgb(132, 164, 148);
 }
 
 #searchButton,
 #showDictionary {
+  text-align: center;
   width: 100px;
   border-radius: 10px;
   background-color: rgb(42, 111, 105);
   color: white;
   background-color: #85b9af;
-  color:#003344;
+  color: #003344;
   border-color: white;
 }
 
-#showDictionary{
+#showDictionary {
   width: 150px;
 }
 
-.sidesection {
-  background-color: rgb(153, 190, 190);
-  width: 180px;
-  height: 600px;
-  margin: 0px 117px 0px 35px;
-  text-align: center;
-  border-radius: 20px;
-  box-shadow: 3px 3px black, -1em 0 0.4em rgb(187, 217, 223);
-  color: white;
-}
-
 button:hover {
-  background-color: #00AA88;
+  background-color: #00aa88;
   cursor: pointer;
 }
-
 
 h2 {
   padding-top: 20px;
@@ -145,8 +162,11 @@ ul {
   font-size: 1rem;
 }
 
-.save {
-  margin-top: 100px;
+#saveButton {
+  background-color: #85b9af;
+  position: relative;
+  left: 386px;
+  border-radius: 5px;
 }
 
 footer {
@@ -155,7 +175,9 @@ footer {
   text-align: center;
   justify-content: end;
   padding: 18px;
-  margin-top: 425px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background-color: rgb(164, 184, 168);
 }
 
@@ -179,4 +201,3 @@ footer {
   gap: 0.5em;
 
 }
-
