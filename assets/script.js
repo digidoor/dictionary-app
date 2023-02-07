@@ -70,6 +70,7 @@ function initSave( )
 	var saveButton = document.createElement("button");
 	saveButton.setAttribute('id', "saveButton");
 	saveButton.textContent = "Save Definitions";
+	//checkBox.classList.add("button");
 	displayList.append(saveButton);
 	saveButton.addEventListener('click', choicesHandler);
 }
