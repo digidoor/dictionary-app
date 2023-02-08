@@ -1,110 +1,139 @@
 * {
-  color: #ffffff;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-  'Lucida Sans', Arial, sans-serif;
-}
-
-body {
-  background-color: #121213;
-}
-
-.game-container {
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.title-container {
-  text-align: center;
-  width: 510px;
-  border-bottom: solid 1px #3a3a3c;
-}
-
-.tile-container {
-  width: 330px;
-  margin-bottom: 30px;
-}
-
-.key-container {
-  width: 510px;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.key-container button {
-  width: 43px;
-  height: 58px;
-  border-radius: 4px;
-  border: none;
-  background-color: #818384;
-  margin: 4px;
-}
-
-.key-container button:nth-child(11) {
-  margin-left: 30px;
-}
-
-.key-container button:nth-child(20),
-.key-container button:nth-child(28) {
-  width: 68px;
-}
-
-.tile-container div {
-  display: flex;
-}
-
-.tile-container .tile {
-  width: 62px;
-  height: 62px;
-  border: 2px solid#3a3a3c;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 2px;
-}
-
-.message-container {
-  height: 30px;
-}
-
-.message-container p {
-  background-color: #818384;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 0;
-}
-
-.tile.flip {
-  animation: 0.5s linear flipping;
-}
-
-@keyframes flipping {
-  0% {
-      transform: rotateX(0deg);
+    box-sizing: border-box;
   }
-  50% {
-      transform: rotateX(90deg);
+  
+  body {
+    font-family: Arial;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: flex-start;
+    background: linear-gradient(0deg, rgba(19,41,61,1) 0%, rgba(237,245,249,1) 63%);
   }
-  100% {
-      transform: rotateX(0deg);
+  
+  .reset-button {
+    font-size: 16px;
+    height: 30px;
+    line-height: 8px;
+    margin-top: 20px;
   }
-}
-
-
-
-.grey-overlay {
-  background-color: #3a3a3c !important;
-  border:none !important;
-}
-.yellow-overlay {
-  background-color: #b59f3a !important;
-  border:none !important;
-}
-
-.green-overlay {
-  background-color: #538d4e !important;
-  border:none !important;
-}
+  
+  .win-loss-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+  }
+  
+  button {
+    background: radial-gradient(circle, rgba(240,230,140,1) 0%, rgba(187,96,33,0.9542191876750701) 100%);
+    border-radius: 8px;
+    color: #13293d;
+    cursor: pointer;
+    font-size: 2em;
+    letter-spacing: 0.21px;
+    line-height: 16px;
+    max-width: 255px;
+    padding: 20px 52px;
+    text-align: center;
+    transition-duration: 0.15s;
+    transition-property: background-color;
+    transition-timing-function: linear;
+    margin-top: 0.6em;
+  }
+  
+  header {
+    padding: 40px;
+    text-align: center;
+    background: #13293d;
+    color: #fff;
+    border-bottom:30px #879274;
+  }
+  
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  section {
+    flex: 0 auto;
+    padding: 8px;
+    margin-top: 50px;
+    background-color: white;
+    border-radius: 8px;
+  }
+  
+  .word-guess {
+    width: 55vw;
+    height: 400px;
+  }
+  
+  .results {
+    width: 30vw;
+    height: 400px;
+  }
+  
+  .card {
+    background: radial-gradient(circle, rgba(240,230,140,1) 0%, rgba(187,124,33,0.604079131652661) 100%);
+    border: 1px solid #eceff1;
+    border-radius: 8px;
+    box-shadow: rgba(60, 64, 67, 2) 0 1px 2px 0,
+      rgba(60, 64, 67, 0.15) 0 2px 4px 3px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .word-blanks {
+    line-height: 360px;
+  }
+  
+  .large-font {
+    font-size: 3.5em;
+    text-align:center;
+  }
+  
+  .timer {
+    height: 240px;
+    padding: 10px;
+    background: #13293d;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .timer-text {
+    padding: 55px;
+  }
+  
+  @media screen and (max-width: 1183px) {
+    main {
+      flex-direction: column;
+    }
+  
+    .word-guess,
+    .results {
+      width: 90vw;
+    }
+  
+    section {
+      background-color: white;
+      margin: 20px auto;
+      width: 92vw;
+    }
+  }
+  
+  @media screen and (max-width: 504px) {
+    .large-font {
+      font-size: 2em;
+    }
+  
+    .reset-button {
+      font-size: 12px;
+      width: 20ox;
+      
+    }
+  
+    .timer {
+      height: 200px;
+    }
+  

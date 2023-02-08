@@ -7,15 +7,38 @@
     <link rel="stylesheet" type="text/css" href="gamestyle.css" />
   </head>
   <body>
-   <div class="game-container">
-    <div class="title-container">
-      <h1> Wordle </h1>
+    <header>
+      <div class= "large-font">Word Guess Game</div>
+      <button class="start-button">Start</button>
+    </header>
 
-      <div class="message-container"></div></div>
-      <div class="tile-container"></div></div>
-      <div class="key-container"></div></div>
+    <main>
+      <section>
+        <div class="card word-guess">
+          <div class="large-font word-blanks"> hello </div>
+        </div>
+      </section>
 
-    </div>
+      <section>
+        <div class="card results">
+          <div class = "win-loss-container">
+          <div>
+          <h2>Wins: <span class="win">0 </span> </h2>
+          <h2>Losses: <span class="lose">0</span></h2>
+        </div>
+          <button class="reset-button">Reset Score</button>
+      </div>
+          <div class= "card timer">
+            <div class = "timer-text">
+            <div class="large-font timer-count">10</div>
+            <h3>seconds remaining</h3>
+          </div>
+        
+          </div>
+        </div>
+      </section>
+    </main>
     <script src="gamescript.js"></script>
   </body>
 </html>
+

@@ -10,6 +10,7 @@ var dictionaryButton = document.querySelector('#showDictionary');
 const btn = document.querySelector('#gameBtn')
 console.log(dictionary);
 
+
 btn.onclick = function () {
   location.href = "gameAssets/gameindex.html" // adding click listener to game button to take to game html
 };
