@@ -105,15 +105,18 @@ var blanksLetters = [];
 
 // function to render blanks 
 async function renderBlanks() {
-  var chosenWord = await load()
+  chosenWord = await load()
   console.log(chosenWord)
   // Randomly picks word from words array
+  
   lettersInChosenWord = chosenWord.toString().split("");
+  console.log(lettersInChosenWord)
   numBlanks = lettersInChosenWord.length;
+  console.log(numBlanks)
   blanksLetters = []
   // Uses loop to push blanks to blankLetters array
   for (var i = 0; i < numBlanks; i++) {
-   blanksLetters.push("_");
+   blanksLetters.push( "_");
  }
   // Converts blankLetters array into a string and renders it on the screen
  wordBlank.textContent = blanksLetters.join(" ");
@@ -174,6 +177,7 @@ function checkLetters(letter) {
       letterInWord = true;
     }
   }
+  console.log(letterInWord)
   if (letterInWord) {
     for (var j = 0; j < numBlanks; j++) {
       if (chosenWord[j] === letter) {
@@ -193,6 +197,7 @@ document.addEventListener("keydown", async function(event) {
   // Convert all keys to lower case
   var key = event.key.toLowerCase();
   var alphabetNumericCharacters = "abcdefghijklmnopqrstuvwxyz0123456789 ".split("");
+
   // Test if key pushed is letter
   if (alphabetNumericCharacters.includes(key)) {
     var letterGuessed = event.key;
